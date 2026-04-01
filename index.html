@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Digital Shop 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: Arial;
+    margin: 0;
+    background: linear-gradient(to right, #ffc0cb, #ff69b4);
+    text-align: center;
+}
+
+/* LOGIN */
+#loginPage {
+    margin-top: 100px;
+}
+
+.box {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+input {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 200px;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background: hotpink;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: deeppink;
+}
+
+/* PRODUK */
+#productPage {
+    display: none;
+}
+
+.product {
+    background: white;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 15px;
+    display: inline-block;
+    width: 150px;
+    cursor: pointer;
+}
+
+.product img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* HEADER BUTTON */
+.top-buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.logout {
+    background: red;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.sell {
+    background: purple;
+    font-size: 12px;
+}
+
+/* POPUP */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.popup-content img {
+    width: 150px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage">
+    <div class="box">
+        <h2>Login Admin 💖</h2>
+        <input type="text" id="username" placeholder="Username"><br>
+        <input type="password" id="password" placeholder="Password"><br>
+        <button onclick="login()">Masuk 🚀</button>
+        <p id="error" style="color:red;"></p>
+    </div>
+</div>
+
+<!-- PRODUCT PAGE -->
+<div id="productPage">
+
+    <div class="top-buttons">
+        <button class="sell" onclick="alert('Fitur jual belum tersedia 😄')">Jual Barang 🛍️</button>
+        <button class="logout" onclick="logout()">Logout 🚪</button>
+    </div>
+
+    <h2>Produk Digital Imut 💕</h2>
+
+    <div class="product" onclick="buy('Ebook Bisnis 💼','https://via.placeholder.com/150?text=Ebook')">
+        <img src="https://via.placeholder.com/150?text=Ebook">
+        <p>Ebook 💼</p>
+    </div>
+
+    <div class="product" onclick="buy('Template Canva 🎨','https://via.placeholder.com/150?text=Canva')">
+        <img src="https://via.placeholder.com/150?text=Canva">
+        <p>Canva 🎨</p>
+    </div>
+
+    <div class="product" onclick="buy('Preset Lightroom 📸','https://via.placeholder.com/150?text=Preset')">
+        <img src="https://via.placeholder.com/150?text=Preset">
+        <p>Preset 📸</p>
+    </div>
+
+    <div class="product" onclick="buy('Script Bot 🤖','https://via.placeholder.com/150?text=Bot')">
+        <img src="https://via.placeholder.com/150?text=Bot">
+        <p>Bot 🤖</p>
+    </div>
+
+    <div class="product" onclick="buy('Desain Logo 🖌️','https://via.placeholder.com/150?text=Logo')">
+        <img src="https://via.placeholder.com/150?text=Logo">
+        <p>Logo 🖌️</p>
+    </div>
+
+    <div class="product" onclick="buy('Video Editing 🎬','https://via.placeholder.com/150?text=Video')">
+        <img src="https://via.placeholder.com/150?text=Video">
+        <p>Video 🎬</p>
+    </div>
+
+</div>
+
+<!-- POPUP -->
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <img id="popupImg">
+        <h3 id="namaProduk"></h3>
+        <p>Rekening: 085708829924 💳</p>
+        <p>Kirim bukti pembayaran ya 💖</p>
+        <button onclick="confirmBuy()">Beli 💸</button>
+        <button onclick="closePopup()">Cancel ❌</button>
+    </div>
+</div>
+
+<script>
+// AUTO LOGIN CHECK
+if (localStorage.getItem("login") === "true") {
+    showProduct();
+}
+
+// LOGIN
+function login() {
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    if (user === "admin" && pass === "1234") {
+        localStorage.setItem("login", "true");
+        showProduct();
+    } else {
+        document.getElementById("error").innerText = "Login gagal 😢";
+    }
+}
+
+// SHOW PRODUCT PAGE
+function showProduct() {
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("productPage").style.display = "block";
+}
+
+// LOGOUT
+function logout() {
+    localStorage.removeItem("login");
+    document.getElementById("productPage").style.display = "none";
+    document.getElementById("loginPage").style.display = "block";
+}
+
+// BELI PRODUK (UPDATE ADA GAMBAR)
+function buy(nama, gambar) {
+    document.getElementById("popup").style.display = "flex";
+    document.getElementById("namaProduk").innerText = nama;
+    document.getElementById("popupImg").src = gambar;
+}
+
+// CLOSE POPUP
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+
+// KONFIRMASI BELI
+function confirmBuy() {
+    alert("Pembelian sukses 🎉💖");
+    closePopup();
+}
+</script>
+
+</body>
+</html>
